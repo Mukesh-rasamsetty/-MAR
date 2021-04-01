@@ -1,0 +1,33 @@
+version: '3.7'
+services:
+  order-service:
+    image: rasamsetty/order-service
+    ports:
+      - "8081:8081"
+    restart: always
+    links:
+      - eureka
+
+  eureka:
+    image: rasamsetty/eureka
+    ports:
+      - "8761:8761"
+    restart: always
+
+  admin:
+    image: rasamsetty/admin-server
+    ports:
+      - "8080:8080"
+    restart: always
+    links:
+      - eureka
+
+  inventory-service:
+    image: rasamsetty/inventory-service
+    ports:
+      - "8082:8082"
+    restart: always
+    links:
+      - eureka
+    depends_on:
+      - order-service
